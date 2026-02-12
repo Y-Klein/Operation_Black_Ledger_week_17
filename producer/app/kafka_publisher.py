@@ -1,4 +1,5 @@
 import json
+import time
 from confluent_kafka import Producer
 from mongo_connection import *
 
@@ -7,7 +8,7 @@ insert(my_col)
 
 
 
-producer = Producer({"bootstrap.servers": "producer:9092"})
+producer = Producer({"bootstrap.servers": "kafka:9092"})
 
 def delivery_report(err, msg):
     if err:
@@ -28,3 +29,4 @@ while my_col.find():
             callback=delivery_report
         )
         producer.flush()
+        time.sleep(0.5)
