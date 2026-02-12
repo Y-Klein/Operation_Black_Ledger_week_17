@@ -4,7 +4,8 @@ from confluent_kafka import Producer
 from mongo_connection import *
 
 my_col = connect()
-insert(my_col)
+with open("app/suspicious_customers_orders.json", "r") as file:
+    insert(my_col,file)
 
 
 

@@ -5,30 +5,32 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      kafka:
-        condition: service_healthy
+      mysql:
+        condition: service_started
 
   consumer:
     build: ./consumer
     depends_on:
-      api:
+      mongo:
         condition: service_started
 
   producer:
     build: ./producer
     depends_on:
-      api:
+      mysql:
         condition: service_started
 
   mysql:
     image: mysql
     container_name: mysql
-    ports:
-      - 3306:3306
+
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_DATABASE: project
       MYSQL_USER: admin
+    depends_on:
+      kafka:
+        condition: service_healthy
 
 
   mongo:
@@ -36,8 +38,10 @@ services:
     container_name: mongo-dev
     environment:
       MONGO_INITDB_DATABASE: project
-    ports:
-      - 27017:27017
+
+    depends_on:
+      kafka:
+        condition: service_healthy
 
   kafka:
     image: confluentinc/cp-kafka:7.8.3

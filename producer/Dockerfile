@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python","kafka_publisher.py"]
+CMD ["python","app/kafka_publisher.py"]
