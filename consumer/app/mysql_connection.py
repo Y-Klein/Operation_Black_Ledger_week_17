@@ -39,7 +39,6 @@ def create_tables(my_cursor):
     comments VARCHAR(255),
     customerNumber INT,
     PRIMARY KEY (orderNumber),
-    FOREIGN KEY (customerNumber) REFERENCES customers (customerNumber)
     );
 
     """)
